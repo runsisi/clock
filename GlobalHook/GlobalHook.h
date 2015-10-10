@@ -1,3 +1,7 @@
+/*
+ * runsisi AT hust.edu.cn
+ */
+
 #ifndef GLOBALHOOK_RUNSISI_H_
 #define GLOBALHOOK_RUNSISI_H_
 

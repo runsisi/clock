@@ -1,3 +1,7 @@
+/*
+ * runsisi AT hust.edu.cn
+ */
+
 #define GLOBALHOOKEXPORT __declspec(dllexport)
 #include "GlobalHook.h"
 
