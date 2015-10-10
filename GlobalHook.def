@@ -1,0 +1,5 @@
+LIBRARY	"GlobalHook"
+EXPORTS
+	InstallHook
+	UninstallHook
+	IsHookInstalled
