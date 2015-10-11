@@ -27,5 +27,25 @@ k.exe 和 GlobalHook.dll。
 --------
 
 拷贝 Clock 目录下的 Clock.exe gdiplus.dll Theme 以及 GlobalHook 目录下的 G
-lobalHook.dll 到同一个位置，然后运行 Clock.exe 即可，闹钟会每隔 45 分钟唤醒\
+lobalHook.dll 到同一目录，然后运行 Clock.exe 即可，闹钟会每隔 45 分钟唤醒\
 一次，在唤醒的同时会屏蔽所有的鼠标动作。
+
+自启动
+----------
+
+Clock 目录下有一个 autostart.bat 的批处理文件，可以用于控制 Clock.exe 是否\
+在系统启动时自动启动，将该批处理放在和 Clock.exe 在同一目录，然后运行批处理\
+按照提示操作即可。
+
+完整的目录结构
+--------------------
+
+如下图所示：
+::
+
+    .
+    ├── Clock.exe
+    ├── GlobalHook.dll
+    ├── gdiplus.dll
+    ├── Theme
+    └── autostart.bat
