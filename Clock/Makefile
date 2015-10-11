@@ -2,20 +2,20 @@
 
 all: Clock.exe
 
-Clock.exe: Xml.lib ClockWnd.obj Main.obj Main.res
-	link  /OUT:"$@" /DYNAMICBASE /MACHINE:X86 /SUBSYSTEM:WINDOWS "kernel32.lib" \
-	"user32.lib" "gdi32.lib" $**
+Clock.exe: Xml.lib ClockWnd.obj Main.obj Clock.res
+	link  /OUT:"$@" /DYNAMICBASE /MACHINE:X86 /SUBSYSTEM:WINDOWS /NOLOGO \
+	"kernel32.lib" "user32.lib" "gdi32.lib" $**
 
 Xml.lib: CXml\Xml.obj CXml\XmlNode.obj CXml\XmlNodes.obj CXml\Xsl.obj 
-	lib /OUT:"$@" $**
+	lib /OUT:"$@" /NOLOGO $**
 
 .cpp.obj:
-	cl /Fo"$@" /c /O2 /MT /Gd /EHsc \
+	cl /Fo"$@" /c /O2 /MT /Gd /EHsc /nologo \
 	/D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_UNICODE" /D "UNICODE" \
 	/I"Include" /I"." $<
 
 .rc.res:
-	rc $<
+	rc /nologo $<
 
 clean:
 	@del /f /q *.exe 2> nul

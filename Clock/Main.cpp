@@ -2,10 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "Main.h"
 #include "./ClockWnd.h"
-#include "./Resource1.h"
 #include <map>
+#include "resource.h"
 
 #define VERIFY(x)
 
@@ -185,11 +184,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		{
-			// ϵͳ����			
 			g_stNotify.cbSize = sizeof(NOTIFYICONDATA);
 			g_stNotify.hWnd = hWnd;
-			g_stNotify.uID = IDI_ICON_MAIN;
-			g_stNotify.hIcon = ::LoadIcon( g_hInstance, MAKEINTRESOURCE(IDI_ICON_MAIN));
+			g_stNotify.uID = IDI_ICON1;
+			g_stNotify.hIcon = ::LoadIcon( g_hInstance, MAKEINTRESOURCE(IDI_ICON1));
 			g_stNotify.uFlags = NIF_INFO | NIF_TIP | NIF_MESSAGE | NIF_ICON;
 			g_stNotify.uCallbackMessage = TRAY_MSG_ID;
 			g_stNotify.dwInfoFlags = NIIF_INFO;

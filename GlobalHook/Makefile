@@ -4,14 +4,14 @@ all: GlobalHook.dll
 
 GlobalHook.dll: GlobalHook.obj GlobalHook.res
 	link /OUT:"$@" /DLL /DYNAMICBASE /DEF:"GlobalHook.def" /MACHINE:X86 \
-	/SUBSYSTEM:WINDOWS "user32.lib" $**
+	/NOLOGO /SUBSYSTEM:WINDOWS "user32.lib" $**
 
 .cpp.obj:
-	cl /c /O2 /MT /Gd /EHsc \
+	cl /Fo"$@" /c /O2 /MT /Gd /EHsc /nologo \
 	/D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_UNICODE" /D "UNICODE" $<
 
 .rc.res:
-	rc $<
+	rc /nologo $<
 
 clean:
 	@del /f /q *.dll 2> nul

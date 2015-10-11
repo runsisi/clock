@@ -1,13 +1,13 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "resource1.h"
+#include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "afxres.h"
+#include "winres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -17,7 +17,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
-#pragma code_page(936)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -27,12 +26,12 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 
 1 TEXTINCLUDE 
 BEGIN
-    "resource1.h\0"
+    "resource.h\0"
 END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""afxres.h""\r\n"
+    "#include ""winres.h""\r\n"
     "\0"
 END
 
@@ -44,15 +43,6 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDI_ICON_MAIN           ICON                    "res\\Main.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -77,12 +67,12 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "CompanyName", "runsisi AT hust.edu.cn"
-            VALUE "FileDescription", "clock"
+            VALUE "FileDescription", "Clock"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "clock.exe"
+            VALUE "InternalName", "Clock"
             VALUE "LegalCopyright", "Copyright (C) 2015"
-            VALUE "OriginalFilename", "clock.exe"
-            VALUE "ProductName", "clock"
+            VALUE "OriginalFilename", "Clock"
+            VALUE "ProductName", "Clock"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
@@ -92,6 +82,15 @@ BEGIN
     END
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "res\\Main.ico"
 #endif    // Chinese (Simplified, PRC) resources
 /////////////////////////////////////////////////////////////////////////////
 
