@@ -55,7 +55,12 @@ bool IsHookInstalled()
 
 static LRESULT __stdcall MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 {
-    return ::CallNextHookEx(gs_hGlobalHook, code, wParam, lParam);
+    if (code < 0)
+    {
+        return ::CallNextHookEx(gs_hGlobalHook, code, wParam, lParam);
+    }
+
+    return 1;
 }
 
 BOOL __stdcall DllMain(HMODULE hInstDll, DWORD dwReason, LPVOID)
