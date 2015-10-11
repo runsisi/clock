@@ -22,7 +22,7 @@ if %errorlevel% == 1 (
     if %disabled% == 0 (
         REG DELETE HKCU\Software\Microsoft\Windows\CurrentVersion\Run /f /v %keyName%
     ) else (
-        REG ADD HKCU\Software\Microsoft\Windows\CurrentVersion\Run /f /v %keyName% /t REG_SZ /d %cd%\%programName%
+        REG ADD HKCU\Software\Microsoft\Windows\CurrentVersion\Run /f /v %keyName% /t REG_SZ /d "%cd%\%programName%"
     )
 )
 
