@@ -53,7 +53,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	RegisterClassEx(&wcex);
 
-
 	HWND hWnd;
 	hWnd =  ::CreateWindowEx( WS_EX_LAYERED | WS_EX_LEFT | WS_EX_TOPMOST | WS_EX_TOOLWINDOW
 			, WND_CLASS_NAME
@@ -71,7 +70,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	VERIFY( ::IsWindow(hWnd) );
 	g_oClock.Attach(hWnd);
 	::ShowWindow(hWnd, SW_HIDE);
-	
 
 	// enumurate all the skin directories, and then create the menu,
 	BOOL bLoad = FALSE;
@@ -160,13 +158,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	return (int) msg.wParam;
 }
 
-#define SLEEP_SECONDS 10
-#define AWAKE_SECONDS 5
+// TODO: read from config file
+#define MAX_SLEEP_SECONDS (45 * 60)     // 45 minutes
+#define MAX_AWAKE_SECONDS (3 * 60)      // 3 minutes
 
-bool g_isSleep = true;
-int g_sleepedSeconds = 0;
-int g_awakedSeconds = 0;
-
+bool g_isAwake = false;     // awake, aka is shown on the screen
+int g_sleptSeconds = 0;     // has slept for # seconds
+int g_awakedSeconds = 0;    // has awaked for # seconds
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -188,12 +186,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			g_stNotify.hWnd = hWnd;
 			g_stNotify.uID = IDI_ICON1;
 			g_stNotify.hIcon = ::LoadIcon( g_hInstance, MAKEINTRESOURCE(IDI_ICON1));
-			g_stNotify.uFlags = NIF_INFO | NIF_TIP | NIF_MESSAGE | NIF_ICON;
+			g_stNotify.uFlags = NIF_MESSAGE | NIF_ICON;
 			g_stNotify.uCallbackMessage = TRAY_MSG_ID;
-			g_stNotify.dwInfoFlags = NIIF_INFO;
-			_tcscpy_s( g_stNotify.szInfo, 128, _T("Clock"));
-			_tcscpy_s( g_stNotify.szInfo, 256, _T("Use the context menu to swith skin"));
-			_tcscpy_s( g_stNotify.szInfoTitle, 64, _T("The clock program is running"));
 
 			::Shell_NotifyIcon( NIM_ADD, &g_stNotify);
 		}
@@ -220,6 +214,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if( LOWORD(lParam) == WM_LBUTTONUP ||
 			LOWORD(lParam) == WM_RBUTTONUP )
 		{
+		    ::SetForegroundWindow(g_oClock.m_hWnd);
 			POINT pt;
 			::GetCursorPos(&pt);
 			::TrackPopupMenu( g_hContextMenu
@@ -243,48 +238,49 @@ lblDestroy:
 		::Shell_NotifyIcon( NIM_DELETE, &g_stNotify);
 		g_oClock.Release();
 		PostQuitMessage(0);
+		// TODO: uninstall hook if installed
 		break;	
 	case WM_LBUTTONDOWN:
 		SendMessage( hWnd, WM_NCLBUTTONDOWN,(WPARAM)HTCAPTION,(LPARAM)HTCAPTION);
 		break;
 	case WM_TIMER:
-		if (g_isSleep)
+		if (!g_isAwake)
 		{
-			if (g_sleepedSeconds++ == SLEEP_SECONDS)
+			if (g_sleptSeconds++ == MAX_SLEEP_SECONDS)
 			{
 				// install hook
 				HINSTANCE hinstDLL;
-				typedef BOOL(*inshook)(HWND);
-				inshook instkbhook;
+				typedef BOOL(*inshook_t)();
+				inshook_t inshook;
 				hinstDLL = LoadLibrary(L"GlobalHook.dll");
-				instkbhook = (inshook)GetProcAddress(hinstDLL, "InstallHook");
-				instkbhook(0);
+				inshook = (inshook_t)GetProcAddress(hinstDLL, "InstallHook");
+				inshook();
 
-				g_sleepedSeconds = 0;
-				g_isSleep = false;	// awake it
+				g_sleptSeconds = 0;
+				g_isAwake = true;	// awake it
 
-				ShowWindow(g_oClock.m_hWnd, SW_NORMAL);
+				::ShowWindow(g_oClock.m_hWnd, SW_NORMAL);
 			}
 		}
 
-		if (!g_isSleep)
+		if (g_isAwake)
 		{
 			g_oClock.Render();
 
-			if (g_awakedSeconds++ == AWAKE_SECONDS)
+			if (g_awakedSeconds++ == MAX_AWAKE_SECONDS)
 			{
 				// uninstall hook
 				HINSTANCE hinstDLL;
-				typedef BOOL(*inshook)(HWND);
-				inshook instkbhook;
+				typedef BOOL(*uninshook_t)();
+				uninshook_t uninshook;
 				hinstDLL = LoadLibrary(L"GlobalHook.dll");
-				instkbhook = (inshook)GetProcAddress(hinstDLL, "UninstallHook");
-				instkbhook(0);
+				uninshook = (uninshook_t)GetProcAddress(hinstDLL, "UninstallHook");
+				uninshook();
 
 				g_awakedSeconds = 0;
-				g_isSleep = true;	// sleep again
+				g_isAwake = false;	// sleep again
 
-				ShowWindow(g_oClock.m_hWnd, SW_HIDE);
+				::ShowWindow(g_oClock.m_hWnd, SW_HIDE);
 			}
 		}
 		break;
