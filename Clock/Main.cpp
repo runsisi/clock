@@ -16,6 +16,8 @@ HMENU	  				g_hContextMenu = NULL;
 NOTIFYICONDATA			g_stNotify = {0};
 std::map<INT,CString>	g_mpMenu;
 
+static Gdiplus::GdiPlusInitialize g_Initialize;
+
 #define WND_CLASS_NAME		_T("ClockWndCls")
 #define WND_TITLE			_T("Clock")
 #define CLOCK_TIMER			0xFF00
@@ -138,7 +140,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		);
 	
 	::SetTimer( hWnd, CLOCK_TIMER, 1000, NULL);
-	ShowWindow(hWnd, SW_HIDE);
+	::ShowWindow(hWnd, SW_HIDE);
 	//UpdateWindow(hWnd);
 	//g_oClock.Render();
 
@@ -260,6 +262,7 @@ lblDestroy:
 				g_isAwake = true;	// awake it
 
 				::ShowWindow(g_oClock.m_hWnd, SW_NORMAL);
+				::UpdateWindow(g_oClock.m_hWnd);
 			}
 		}
 

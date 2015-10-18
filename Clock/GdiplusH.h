@@ -170,7 +170,7 @@ namespace Gdiplus
 #endif
     };
 #ifndef GDIPLUS_NO_AUTO_INIT
-    __declspec(selectany) GdiPlusInitialize GdiPlusInitialize::m_Initialize;
+    GdiPlusInitialize GdiPlusInitialize::m_Initialize;
 #endif
 }
 

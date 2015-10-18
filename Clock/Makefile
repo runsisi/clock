@@ -10,7 +10,7 @@ Xml.lib: CXml\Xml.obj CXml\XmlNode.obj CXml\XmlNodes.obj CXml\Xsl.obj
 	lib /OUT:"$@" /NOLOGO $**
 
 .cpp.obj:
-	cl /Fo"$@" /c /O2 /MT /Gd /EHsc /nologo \
+	cl /Fo"$@" /c /O2 /MT /Gd /EHsc /nologo /D "GDIPLUS_NO_AUTO_INIT" \
 	/D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_UNICODE" /D "UNICODE" \
 	/I"Include" /I"." $<
 
