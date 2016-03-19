@@ -161,8 +161,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 }
 
 // TODO: read from config file
-#define MAX_SLEEP_SECONDS (45 * 60)     // 45 minutes
-#define MAX_AWAKE_SECONDS (3 * 60)      // 3 minutes
+#define MAX_SLEEP_SECONDS (60 * 60)     // 60 minutes
+#define MAX_AWAKE_SECONDS (1 * 60)      // 1 minutes
 
 bool g_isAwake = false;     // awake, aka is shown on the screen
 int g_sleptSeconds = 0;     // has slept for # seconds
